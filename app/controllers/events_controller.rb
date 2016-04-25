@@ -2,8 +2,8 @@ class EventsController < ApplicationController
   before_action :authenticate!
 
   def create
-    @itinerary = Itinerary.find["id"]
-    @event = @itinerary.events.create()
+    itinerary = Itinerary.find["id"]
+    @event = itinerary.events.create()
   end
 
   def price_filter

@@ -25,4 +25,20 @@ class UsersController < ApplicationController
           status: :unauthorized
     end
   end
+
+  def edit
+    @user = User.find(params["id"])
+    render :edit, locals: {user: @user}
+  end
+
+  def update
+    right_now = DateTime.now
+    @user = User.find(params["id"])
+    @user.update(first: params["first"],
+                last: params["last"]
+                email: params["email"],
+                password: params["password"])
+    @user.updated_at = right_now
+    render "create.json.jbuilder", status: :ok
+  end
 end

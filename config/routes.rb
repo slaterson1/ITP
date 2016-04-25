@@ -13,7 +13,8 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-
+post "signup", to: "user#create"
+post "login", to: "user#login"
   # Example resource route with options:
   #   resources :products do
   #     member do

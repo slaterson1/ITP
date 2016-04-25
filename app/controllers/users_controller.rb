@@ -41,4 +41,16 @@ class UsersController < ApplicationController
     @user.updated_at = right_now
     render "create.json.jbuilder", status: :ok
   end
+
+  def destroy
+    @user = User.find_by(email: params["email"])
+    if @user.authenticate(params["password"])
+      @user.destroy
+        render plain: "USER DESTROYED",
+        status: :accepted
+    else
+      render json: { error: "UNAUTHORIZED" },
+        status: :unauthorized
+    end
+  end
 end

@@ -5,7 +5,7 @@ class EventsController < ApplicationController
 
   def initialize
     @headers = {
-      "Authorization" =>
+      "Authorization" =>  ENV["MYCLIENTID"]
       "User-Agent"    =>  "HTTParty"
     }
     @zip = nil
@@ -36,7 +36,7 @@ class EventsController < ApplicationController
 
   def list_seatgeek
     App.get(
-    "geoip=#{@zip}&range=300mi&datetime_local.gte=#{@begin_date}&datetime_local.lte=#{end_date}", 
+    "geoip=#{@zip}&range=300mi&datetime_local.gte=#{@begin_date}&datetime_local.lte=#{end_date}",
     headers: @headers)
   end
 

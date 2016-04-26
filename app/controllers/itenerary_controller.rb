@@ -1,4 +1,4 @@
-class IteneraryController < ApplcationController
+class IteneraryController < ApplicationController
 	before_action :authenticate!
 
 	def new

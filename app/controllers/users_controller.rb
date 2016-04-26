@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     right_now = DateTime.now
     @user = User.find(params["id"])
     @user.update(first: params["first"],
-                last: params["last"]
+                last: params["last"],
                 email: params["email"],
                 password: params["password"])
     @user.updated_at = right_now

@@ -1,4 +1,4 @@
 class Itenerary < ActiveRecord::Base
-	has_many :events
+	has_many :pitstops
 	belongs_to :user
 end

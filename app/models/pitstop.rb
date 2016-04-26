@@ -1,4 +1,4 @@
 class Pitstop < ActiveRecord::Base
   has_many :events
-  belongs_to :itenerary
+  belongs_to :itinerary
 end

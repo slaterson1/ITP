@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate!
   include HTTParty
-  base_uri "https:https://api.seatgeek.com/2/events?per_page=15&taxonomies.id=1010100&"
+  base_uri "api.seatgeek.com/2/events?per_page=15&taxonomies.id=1010100&"
 
   def initialize
     @headers = {

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team: MyString
+  gps_location: MyString
+  city: MyString
+  state: MyString
+  zip: 1
+  street_address: MyString
+  low_price: 9.99
+  high_price: 9.99
+  average_price: 9.99
+  venue_photo: MyString
+  ticket_url: MyString
+  local_datetime: 2016-04-26 10:33:53
+
+two:
+  team: MyString
+  gps_location: MyString
+  city: MyString
+  state: MyString
+  zip: 1
+  street_address: MyString
+  low_price: 9.99
+  high_price: 9.99
+  average_price: 9.99
+  venue_photo: MyString
+  ticket_url: MyString
+  local_datetime: 2016-04-26 10:33:53

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  # skip_before_filter  :verify_authenticity_token, only: [:create, :login]
+  skip_before_filter  :verify_authenticity_token, only: [:create, :login]
 
   def create
     @user = User.new(first: params["first"],
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
              status: :unprocessable_entity
     end
   end
-  
+
   def login
     @user = User.find_by!(email: params["email"])
     if @user.authenticate(params["password"])

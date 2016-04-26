@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     @user = User.new(first: params["first"],
                      last: params["last"],
                      email: params["email"],
-                     password: params["password"],
+                     password: params["password"])
 
     @user.ensure_auth_token
     if @user.save

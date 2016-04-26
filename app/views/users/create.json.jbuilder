@@ -1,0 +1,1 @@
+json.user @user, :id, :first, :last, :email, :auth_token

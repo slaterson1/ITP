@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
     with: /.+\@.+\..+/,
     message: "USE VALID EMAIL FORMAT."
   }
-
   validates :auth_token, presence: true
 
   def ensure_auth_token

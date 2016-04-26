@@ -37,6 +37,8 @@ gem 'pg_search'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'httparty'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -60,4 +62,4 @@ group :production do
 
   # Use a better web server as recommended.
   gem 'puma'
-end  
+end

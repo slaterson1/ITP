@@ -1,6 +1,6 @@
 class Seatgeek
   include HTTParty
-  base_uri "https://api.seatgeek.com/"
+  base_uri "https://api.seatgeek.com/2"
   format :json
 
   def initialize(start_date)
@@ -23,7 +23,7 @@ class Seatgeek
       "datetime_local.lte" => @end_date
     }
     params = @defaults.merge(options)
-    Seatgeek.get("/events", query: params, headers: @headers)
+    query = Seatgeek.get("/events", query: params, headers: @headers)
   end
 
   def get_games(zip)

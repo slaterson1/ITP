@@ -17,8 +17,29 @@ class ApplicationController < ActionController::Base
   	end
   end
 
+  def real_date?(year, month, day)
+    r1 = false
+    r2 = false
+    r3 = false
+    result = false
+    year.between?(2016, 2100)? r1 = true : r1 = false
+    thirty_day = Set.new([4, 6, 9, 11])
+    month.between?(1, 12)? r2 = true : r2 = false
+    if month == 2 && year % 4 == 0
+      day < 30? r3 = true : r3 = false
+    elsif month == 2 && year % 4 != 0
+      day < 29? r3 = true : r3 = false
+    elsif thirty_day.include?(month)
+      day < 31? r3 = true : r3 = false
+    else
+      day < 32? r3 = true : r3 = false
+    end
+    (r1 == true && r2 == true && r3 == true)? result = true : result = false
+    result
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |error|
        render json: { error: "No such object: #{error.message} " },
       status: :not_found
-    end
+  end
 end

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 post "signup", to: "users#create"
 post "login", to: "users#login"
 get "firstgame" to: "events#first_event"
+get "nextgame" to: "events#next_event"
   # Example resource route with options:
   #   resources :products do
   #     member do

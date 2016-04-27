@@ -23,7 +23,7 @@ class Seatgeek
       "datetime_local.lte" => @end_date
     }
     params = @defaults.merge(options)
-    Games.get("/events", query: params, headers: @headers)
+    Seatgeek.get("/events", query: params, headers: @headers)
   end
 
   def get_games
@@ -35,6 +35,6 @@ class Seatgeek
     }
     params = @defaults.merge(options)
 
-    Games.get("/events", query: params, headers: @headers)
+    Seatgeek.get("/events", query: params, headers: @headers)
   end
 end

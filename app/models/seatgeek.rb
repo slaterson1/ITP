@@ -3,7 +3,7 @@ class Seatgeek
   base_uri "https://api.seatgeek.com/"
   format :json
 
-  def initialize(zip, start_date)
+  def initialize(start_date)
     @headers = {
           "Authorization" =>  ENV["MYCLIENTID"],
           "User-Agent"    =>  "HTTParty"
@@ -27,9 +27,9 @@ class Seatgeek
     Seatgeek.get("/events", query: params, headers: @headers)
   end
 
-  def get_games
+  def get_games(zip)
     options = {
-      "geoip" => @zip,
+      "geoip" => zip,
       "range" => "300mi",
       "datetime_local.gte" => @start_date,
       "datetime_local.lte" => @end_date

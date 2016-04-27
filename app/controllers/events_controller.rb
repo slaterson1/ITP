@@ -18,7 +18,7 @@ class EventsController < ApplicationController
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
-    	s = Seatgeek.new(zip, local_datetime)
+    	s = Seatgeek.new(local_datetime)
       seatgeek = s.get_first_game
       render json: seatgeek,
       status: :ok
@@ -33,8 +33,8 @@ class EventsController < ApplicationController
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
-    	s = Seatgeek.new(zip, local_datetime)
-    	seatgeek = s.get_games
+    	s = Seatgeek.new(local_datetime)
+    	seatgeek = s.get_games(zip)
       render json: seatgeek,
       status: :ok
     end

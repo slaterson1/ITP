@@ -11,11 +11,11 @@ class EventsController < ApplicationController
   end
 
   def first_event
-  	SeatGeek.new(zip: nil, start_date: params[:start_date]).get_first_game
+  	SeatGeek.new(zip: nil, local_datetime: params[:local_datetime]).get_first_game
   end
-  
+
   def next_event
-  	SeatGeek.new(zip: params[:zip], start_date: params[:start_date]).get_games
-  end		
+  	SeatGeek.new(zip: params[:zip], local_datetime: params[:local_datetime]).get_games
+  end
 
 end

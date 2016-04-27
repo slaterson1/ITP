@@ -13,8 +13,8 @@ class Seatgeek
         }
     @zip = zip
     @start_date = start_date
-    end_date = (start_date + 1.day).strftime("%Y-%m-%d")
-    @end_date = end_date.to_s
+    end_date = start_date.to_date + 1.day
+    @end_date = end_date.strftime("%Y-%m-%d")
   end
 
   def get_first_game

@@ -20,7 +20,12 @@ class EventsController < ApplicationController
   end
 
   def next_event
-  	SeatGeek.new(zip: params[:zip], local_datetime: params[:local_datetime]).get_games
+    zip = params[:zip]
+    local_datetime = params[:local_datetime]
+  	s = Seatgeek.new(zip, local_datetime)
+  	seatgeek = s.get_games
+    render json: seatgeek,
+    status: :ok
   end
 
 end

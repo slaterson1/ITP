@@ -14,6 +14,7 @@ class EventsController < ApplicationController
     zip = params[:zip]
     local_datetime = params[:local_datetime]
   	SeatGeek.new(zip, local_datetime).get_first_game
+    render "create.json.jbuilder", status: :ok
   end
 
   def next_event

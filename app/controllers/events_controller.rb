@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   def first_event
     zip = params[:zip]
     local_datetime = params[:local_datetime]
-  	s = SeatGeek.new(zip, local_datetime)
+  	s = Seatgeek.new(zip, local_datetime)
     seatgeek = s.get_first_game
     render json: seatgeek,
     status: :ok

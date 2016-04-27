@@ -15,6 +15,15 @@ class SeatGeek
     @start_date = start_date
     @end_date = (start_date + 1.day).strftime("%Y-%m-%d")
   end
+  
+  def get_first_game
+    options = {
+      "datetime_local.gte" => @start_date,
+      "datetime_local.lte" => @end_date
+    }
+    params = @defaults.merge(options)
+    Games.get("/events", query: params, headers: @headers)
+  end  
 
   def get_games
     options = {
@@ -24,6 +33,7 @@ class SeatGeek
       "datetime_local.lte" => @end_date
     }
     params = @defaults.merge(options)
-    Games.get("/events", query: params, headers: @headers, :debug_output => $stdout)
+
+    Games.get("/events", query: params, headers: @headers)
   end
 end

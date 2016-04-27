@@ -1,49 +1,30 @@
-class SeatGeek < ActiveRecord::Base
+class SeatGeek
   include HTTParty
-  base_uri "api.seatgeek.com/2/events?per_page=15&taxonomies.id=1010100&"
+  base_uri "https://api.seatgeek.com/"
 
-  def initialize
+  def initialize(zip, start_date)
     @headers = {
-      "Authorization" =>  ENV["MYCLIENTID"],
-      "User-Agent"    =>  "HTTParty"
-    }
-    @zip = nil
-    @begin_date = nil
-    @end_date = nil
+          "Authorization" =>  ENV["MYCLIENTID"],
+          "User-Agent"    =>  "HTTParty"
+      }
+        @defaults = {
+          "per_page" => 15,
+          "taxonomies.id" => 1010100
+        }
+    @zip = zip
+    @start_date = start_date
+    @end_date = (start_date + 1.day).strftime("%Y-%m-%d")
   end
   
-  def real_date?(year, month, day)
-    r1 = false
-    r2 = false
-    r3 = false
-    result = false
-    year.between?(2016, 2100)? r1 = true : r1 = false
-    thirty_day = Set.new([4, 6, 9, 11])
-    month.between?(1, 12)? r2 = true : r2 = false
-    if month == 2 && year % 4 == 0
-      day < 30? r3 = true : r3 = false
-    elsif month == 2 && year % 4 != 0
-      day < 29? r3 = true : r3 = false
-    elsif thirty_day.include?(month)
-      day < 31? r3 = true : r3 = false
-    else
-      day < 32? r3 = true : r3 = false
-    end
-    (r1 == true && r2 == true && r3 == true)? result = true : result = false
-    result
-  end
-
-  def list_seatgeek
-    EventsController.get(
-    "geoip=#{@zip}&range=300mi&datetime_local.gte=#{@begin_date}&datetime_local.lte=#{end_date}",
-    headers: @headers)
-  end
-
-  def get_zip
-
-  end
-
-  def get_local_datetime
-
+  def get_games
+    options = {
+      "geoip" => @zip,
+      "range" => "300mi",
+      "datetime_local.gte" => @start_date,
+      "datetime_local.lte" => @end_date
+    }
+    params = @defaults.merge(options)
+    Games.get("/events", query: params, headers: @headers, :debug_output => $stdout)
+  binding.pry
   end
 end

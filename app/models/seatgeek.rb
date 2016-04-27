@@ -1,6 +1,7 @@
 class Seatgeek
   include HTTParty
   base_uri "https://api.seatgeek.com/"
+  format :json
 
   def initialize(zip, start_date)
     @headers = {

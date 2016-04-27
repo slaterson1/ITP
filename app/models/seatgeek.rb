@@ -1,4 +1,4 @@
-class SeatGeek
+class SeatGeek < ActiveRecord::Base
   include HTTParty
   base_uri "https://api.seatgeek.com/"
 
@@ -15,7 +15,7 @@ class SeatGeek
     @start_date = start_date
     @end_date = (start_date + 1.day).strftime("%Y-%m-%d")
   end
-  
+
   def get_first_game
     options = {
       "datetime_local.gte" => @start_date,
@@ -23,7 +23,7 @@ class SeatGeek
     }
     params = @defaults.merge(options)
     Games.get("/events", query: params, headers: @headers)
-  end  
+  end
 
   def get_games
     options = {

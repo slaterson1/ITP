@@ -1,4 +1,4 @@
-class Seatgeek < ActiveRecord::Base
+class Seatgeek
   include HTTParty
   base_uri "https://api.seatgeek.com/"
 

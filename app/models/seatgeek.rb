@@ -33,6 +33,7 @@ class SeatGeek
       "datetime_local.lte" => @end_date
     }
     params = @defaults.merge(options)
+
     Games.get("/events", query: params, headers: @headers)
   end
 end

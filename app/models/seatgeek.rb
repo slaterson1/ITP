@@ -15,7 +15,7 @@ class SeatGeek
     @start_date = start_date
     @end_date = (start_date + 1.day).strftime("%Y-%m-%d")
   end
-  
+
   def get_games
     options = {
       "geoip" => @zip,
@@ -25,6 +25,5 @@ class SeatGeek
     }
     params = @defaults.merge(options)
     Games.get("/events", query: params, headers: @headers, :debug_output => $stdout)
-  binding.pry
   end
 end

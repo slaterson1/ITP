@@ -34,9 +34,11 @@ class EventsController < ApplicationController
       itinerary = current_user.itineraries.last
       @pitstop = itinerary.pitstops.new(zip: zip,
                                         stop_number: (itinerary.stop_number + 1))
+      @pitstop.save
       itinerary.update(travel_days: (itinerary.travel_days + 1))
-      @event = @pitstop.events.create(zip: zip,
+      @event = @pitstop.events.new(zip: zip,
                                       local_datetime: local_datetime)
+      @event.save
       render "create.json.jbuilder", status: :created
     end
   end

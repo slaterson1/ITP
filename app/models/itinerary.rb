@@ -9,5 +9,5 @@ class Itinerary < ActiveRecord::Base
     with: /\d{4}-\d{2}-\d{2}/,
     message: "USE VALID DATE FORMAT 'YYYY-MM-DD'."
   }
-	validates :travel_days, presence: true
+	validates :travel_days, presence: true, in: 1..10000
 end

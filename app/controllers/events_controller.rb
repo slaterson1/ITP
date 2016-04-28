@@ -9,13 +9,16 @@ class EventsController < ApplicationController
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
-      itinerary = current_user.itineraries.create(start_date: local_datetime,
+      itinerary = current_user.itineraries.new(start_date: local_datetime,
   																	             zip: zip,
   																	             travel_days: 1)
-      @pitstop = itinerary.pitstops.create(zip: zip,
+      itinerary.save
+      @pitstop = itinerary.pitstops.new(zip: zip,
                                           stop_number: 1)
-      @event = @pitstop.events.create(zip: zip,
+      @pitstop.save
+      @event = @pitstop.events.new(zip: zip,
                                       local_datetime: local_datetime)
+      @event.save
       render "create.json.jbuilder", status: :created
     end
   end

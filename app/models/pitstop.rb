@@ -2,7 +2,7 @@ class Pitstop < ActiveRecord::Base
   has_many :events
   belongs_to :itinerary
 
-  validates :city, presence: true
+  validates :zip, presence: true
   validates :date_visited, presence: true,
   format: {
     with: /\d{4}-\d{2}-\d{2}/,

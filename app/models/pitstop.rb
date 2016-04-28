@@ -3,7 +3,7 @@ class Pitstop < ActiveRecord::Base
   belongs_to :itinerary
 
   validates :city, presence: true
-  validates :date_visited, presence: true
+  validates :date_visited, presence: true,
   format: {
     with: \d\d\d\d-\d\d-\d\d,
     message: "USE VALID DATE FORMAT 'YYYY-MM-DD'."

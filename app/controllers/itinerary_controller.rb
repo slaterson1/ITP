@@ -1,7 +1,25 @@
 class ItineraryController < ApplicationController
 	before_action :authenticate!
 
-	def new
-		@itinerary = Itinerary.new
+	def create
+		@itinerary = current_user.itineraries.create(start_date: params["start_date"],
+																	start_city: params["start_city"],
+																	travel_days: params["travel_days"])
+		render "create.json.jbuilder", status: :created
 	end
-end	 
+
+	def update
+		@itinerary = current_user.itineraries.find["id"]
+		@itinerary.update(start_date: params["start_date"],
+											start_city: params["start_city"],
+											travel_days: params["travel_days"])
+		render "create.json.jbuilder", status: :ok
+	end
+
+	def destroy
+    @itinerary = current_user.itineraries.find_by(start_date: params["start_date"])
+    @itinerary.destroy
+    render plain: "ITINERARY DESTROYED",
+    status: :accepted
+  end
+end

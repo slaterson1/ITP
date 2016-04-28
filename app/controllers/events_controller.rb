@@ -9,11 +9,11 @@ class EventsController < ApplicationController
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
-      itinerary = current_user.itineraries.new(start_date: local_datetime,
+      @itinerary = current_user.itineraries.new(start_date: local_datetime,
   																	             zip: zip,
   																	             travel_days: 1)
-      itinerary.save
-      @pitstop = itinerary.pitstops.new(zip: zip,
+      @itinerary.save
+      @pitstop = @itinerary.pitstops.new(zip: zip,
                                           stop_number: 1)
       @pitstop.save
       @event = @pitstop.events.new(zip: zip,
@@ -31,11 +31,11 @@ class EventsController < ApplicationController
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
-      itinerary = current_user.itineraries.last
-      @pitstop = itinerary.pitstops.new(zip: zip,
+      @itinerary = current_user.itineraries.last
+      @pitstop = @itinerary.pitstops.new(zip: zip,
                                         stop_number: (itinerary.stop_number + 1))
       @pitstop.save
-      itinerary.update(travel_days: (itinerary.travel_days + 1))
+      @itinerary.update(travel_days: (itinerary.travel_days + 1))
       @event = @pitstop.events.new(zip: zip,
                                       local_datetime: local_datetime)
       @event.save

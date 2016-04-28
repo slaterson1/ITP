@@ -1,0 +1,1 @@
+json.pitstop @pitstop, :zip, :stop_number

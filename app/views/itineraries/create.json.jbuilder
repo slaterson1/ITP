@@ -1,0 +1,1 @@
+json.itenerary @itenerary, :zip, :datetime_local, :travel_days

@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
     message: "USE VALID EMAIL FORMAT."
   }
   validates :auth_token, presence: true
+  validates :first, presence: true
+  validates :last, presence: true
 
   def ensure_auth_token
 		unless self.auth_token

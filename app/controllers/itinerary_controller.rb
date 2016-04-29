@@ -18,7 +18,7 @@ class ItineraryController < ApplicationController
 
 	def show
 		@itinerary = current_user.itineraries.find_by[start_date: params["start_date"]
-		@pitstops = @itinerary.all
+		@pitstops = @itinerary.piststops.all
 		render "show.json.jbuilder", status: :ok
 	end	
 

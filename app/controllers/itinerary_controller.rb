@@ -16,6 +16,12 @@ class ItineraryController < ApplicationController
 		render "create.json.jbuilder", status: :ok
 	end
 
+	def show
+		@itinerary = current_user.itineraries.find_by["start_date"]
+		@pitstops = @itinerary.all
+		render "show.json.jbuilder", status: :ok
+	end	
+
 	def destroy
     @itinerary = current_user.itineraries.find_by(start_date: params["start_date"])
     @itinerary.destroy

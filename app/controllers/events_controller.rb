@@ -61,6 +61,7 @@ class EventsController < ApplicationController
     else
       new_date = "#{d.year}-#{d.month}-#{new_day}"
     end
+    new_date
   end
 
   def first_event

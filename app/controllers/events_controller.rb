@@ -25,21 +25,26 @@ class EventsController < ApplicationController
   end
 
   def create_next_event
-    zip = params[:zip]
-    @itinerary = current_user.itineraries.last
-    previous_date = @itinerary.pitstops.last.date_visited
-    previous_date = previous_date.to_date
-    previous_date = previous_date.to_s
-    new_date = advance_a_day(previous_date)
-    @pitstop = @itinerary.pitstops.new(zip: zip,
-                                      stop_number: (@itinerary.pitstops.last.stop_number + 1),
-                                      date_visited: new_date)
-    @pitstop.save!
-    @itinerary.update(travel_days: (@itinerary.travel_days + 1))
-    @event = @pitstop.events.new(zip: zip,
-                                local_datetime: new_date)
-    @event.save!
-    render "create.json.jbuilder", status: :created
+    if closed?
+      render json: { errors: "ITINERARY IS CLOSED TO NEW PITSTOPS AND EVENTS!" },
+                  status: :unauthorized
+    else
+      zip = params[:zip]
+      @itinerary = current_user.itineraries.last
+      previous_date = @itinerary.pitstops.last.date_visited
+      previous_date = previous_date.to_date
+      previous_date = previous_date.to_s
+      new_date = advance_a_day(previous_date)
+      @pitstop = @itinerary.pitstops.new(zip: zip,
+                                        stop_number: (@itinerary.pitstops.last.stop_number + 1),
+                                        date_visited: new_date)
+      @pitstop.save!
+      @itinerary.update(travel_days: (@itinerary.travel_days + 1))
+      @event = @pitstop.events.new(zip: zip,
+                                  local_datetime: new_date)
+      @event.save!
+      render "create.json.jbuilder", status: :created
+    end
   end
 
   def price_filter

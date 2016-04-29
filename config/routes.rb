@@ -21,7 +21,7 @@ post "firstgame", to: "events#create_first_event"
 post "nextgame", to: "events#create_next_event"
 post "firstgamedata", to: "events#first_event"
 post "nextgamedata", to: "events#next_event"
-post "itinerary/:id", to: "itinerary#show"
+post "itinerary", to: "itinerary#show"
 post "itinerary/:id/pitstop_show/:id", to: "pitstops#show"
   # Example resource route with options:
   #   resources :products do

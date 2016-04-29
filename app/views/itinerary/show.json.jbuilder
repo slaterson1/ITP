@@ -1,12 +1,7 @@
 json.itineraries @itineraries do |itinerary|
-	json.start_date itinerary.start_date
-	json.user_id itinerary.user_id
-	json.zip itinerary.zip
+	json.(itenerary, :id, :start_date, :travel_days, :user_id, :zip)
 
-	json.pitstops @pitstops do |pitstop|
-		json.itinerary_id pitstop.itinerary_id
-		json.date_visited pitstop.date_visited
-		json.stop_number pitstop.stop_number
-		json.zip pitstop.zip		
+	json.pitstops itinerary.pitstops do |pitstop|
+		json.(pitstop, :id, :itinerary_id, :date_visited, :stop_number, :zip)
 	end	
 end			

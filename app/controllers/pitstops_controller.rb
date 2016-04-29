@@ -15,7 +15,8 @@ class PitstopsController < ApplicationController
   end
 
   def show
-    @pitstop = Pitstop.find_by[stop_number: params['stop_number']]
+    itinerary = Itinerary.find[:id]
+    @pitstop = itinerary.pitstops.find_by[stop_number: params['stop_number']]
     @event = @pitstop.events.all
     render "show.json.jbuilder", status: :ok
   end

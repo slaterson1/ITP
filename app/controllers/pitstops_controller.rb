@@ -14,6 +14,12 @@ class PitstopsController < ApplicationController
     render "create.json.jbuilder", status: :created
   end
 
+  def show
+    @pitstop = Pitstop.find_by[stop_number: params['stop_number']]
+    @event = @pitstop.events.all
+    render "show.json.jbuilder", status: :ok
+  end
+
   def update
     itinerary = Itinerary.find["id"]
     @itinerary = itinerary.pitstops["id"]

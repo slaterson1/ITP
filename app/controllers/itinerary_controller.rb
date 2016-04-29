@@ -28,24 +28,4 @@ class ItineraryController < ApplicationController
     render plain: "ITINERARY DESTROYED",
     status: :accepted
   end
-
-	def expired?
-		expired = false
-		@itinerary = current_user.itineraries.find["id"]
-		pitstop = @itinerary.pitstops.find["id"]
-		last_event = pitstop.events.last
-		last_date = last_event.local_datetime
-		if DateTime.now > last_date
-			expired = true
-		end
-		expired
-	end
-
-	def closed?
-		result = false
-		if expired?
-			result = true
-		end
-		result
-	end
 end

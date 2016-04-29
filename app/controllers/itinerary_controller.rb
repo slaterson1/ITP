@@ -20,7 +20,7 @@ class ItineraryController < ApplicationController
 		@itinerary = current_user.itineraries.find_by[start_date: params["start_date"]]
 		@pitstops = @itinerary.pitstops.all
 		render "show.json.jbuilder", status: :ok
-	end	
+	end
 
 	def destroy
     @itinerary = current_user.itineraries.find_by(start_date: params["start_date"])
@@ -28,4 +28,24 @@ class ItineraryController < ApplicationController
     render plain: "ITINERARY DESTROYED",
     status: :accepted
   end
+
+	def expired?
+		expired = false
+		@itinerary = current_user.itineraries.find["id"]
+		pitstop = @itinerary.pitstops.find["id"]
+		last_event = pitstop.events.last
+		last_date = last_event.local_datetime
+		if DateTime.now > last_date
+			expired = true
+		end
+		expired
+	end
+
+	def closed?
+		result = false
+		if expired?
+			result = true
+		end
+		result
+	end
 end

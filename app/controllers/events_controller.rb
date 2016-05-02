@@ -25,10 +25,10 @@ class EventsController < ApplicationController
   end
 
   def create_next_event
-    if closed?
-      render json: { errors: "ITINERARY IS CLOSED TO NEW PITSTOPS AND EVENTS!" },
-                  status: :unauthorized
-    else
+    # if expired?
+    #   render json: { errors: "ITINERARY IS CLOSED TO NEW PITSTOPS AND EVENTS!" },
+    #               status: :unauthorized
+    # else
       zip = params[:zip]
       @itinerary = current_user.itineraries.last
       previous_date = @itinerary.pitstops.last.date_visited
@@ -44,8 +44,7 @@ class EventsController < ApplicationController
                                   local_datetime: @new_date)
       @event.save!
       render "create.json.jbuilder", status: :created
-
-    end
+    # end
   end
 
   def price_filter

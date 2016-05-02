@@ -43,19 +43,19 @@ class ApplicationController < ActionController::Base
   end
 
   def advance_a_day(previous_date)
-    d = Date.parse(previous_date)
-    new_day = d.day + 1
+    date_part = Date.parse(previous_date)
+    new_day = date_part.day + 1
     new_date = ""
-    if !real_date?(d.year, d.month, new_day)
+    if !real_date?(previous_date)
       new_day = 1
-      new_month = d.month + 1
-      new_date = "#{d.year}-#{new_month}-#{new_day}"
-      if !real_date?(d.year, new_month, new_day)
-        new_year = d.year + 1
+      new_month = date_part.month + 1
+      new_date = "#{date_part.year}-#{new_month}-#{new_day}"
+      if !real_date?(previous_date)
+        new_year = date_part.year + 1
         new_date = "#{new_year}-#{new_month}-#{new_day}"
       end
     else
-      new_date = "#{d.year}-#{d.month}-#{new_day}"
+      new_date = "#{date_part.year}-#{date_part.month}-#{new_day}"
     end
     new_date
   end

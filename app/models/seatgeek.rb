@@ -15,6 +15,9 @@ class Seatgeek
     @start_date = start_date
     end_date = start_date.to_date + 1.day
     @end_date = end_date.strftime("%Y-%m-%d")
+    @start_date2 = @end_date
+    end_date2 = start_date.to_date + 2.day
+    @end_date2 = end_date2.strftime("%Y-%m-%d")
   end
 
   def get_first_game
@@ -26,11 +29,10 @@ class Seatgeek
     query = Seatgeek.get("/events", query: params, headers: @headers)
   end
 
-  def get_games(zip)
+  def get_games
     options = {
-      "geoip" => zip,
-      "datetime_local.gte" => @start_date,
-      "datetime_local.lte" => @end_date
+      "datetime_local.gte" => @start_date2,
+      "datetime_local.lte" => @end_date2
     }
     params = @defaults.merge(options)
 

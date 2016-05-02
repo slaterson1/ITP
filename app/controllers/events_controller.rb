@@ -81,32 +81,6 @@ class EventsController < ApplicationController
     end
   end
 
-  def destroy_first_event
-    @itinerary = current_user.itineraries.last
-    pitstops = Pitstop.where(itinerary_id: @itinerary.id)
-    pitstops.each do |pitstop|
-      events = Event.where(pitstop_id: pitstop.id)
-      events.each do |event|
-        event.destroy
-      end
-      pitstop.destroy
-    end
-    @itinerary.destroy
-  end
-
-  def destroy_next_event
-    @event = Event.find[:id]
-    @pitstop = Pitstop.find_by(id: @event.pitstop_id)
-    pitstops = Pitstop.where("stop_number >= #{@pitstop.stop_number}")
-    pitstops.each do |pitstop|
-      events = Event.where(pitstop_id: pitstop.id)
-      events.each do |event|
-        event.destroy
-      end
-      pitstop.destroy
-    end
-  end
-
   def expired?
 		expired = false
 		@itinerary = current_user.itineraries.find["id"]

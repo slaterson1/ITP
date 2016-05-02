@@ -82,6 +82,16 @@ class EventsController < ApplicationController
   end
 
   def destroy_first_event
+    @itinerary = current_user.itineraries.last
+    pitstops = Pitstop.where(itinerary_id: @itinerary.id)
+    pitstops.each do |pitstop|
+      events = Event.where(pitstop_id: pitstop.id)
+      events.each do |event|
+        event.destroy
+      end
+      pitstop.destroy
+    end
+    @itinerary.destroy
   end
 
   def destroy_next_event

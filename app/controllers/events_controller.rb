@@ -95,6 +95,16 @@ class EventsController < ApplicationController
   end
 
   def destroy_next_event
+    @event = Event.find[:id]
+    @pitstop = Pitstop.find_by(id: @event.pitstop_id)
+    pitstops = Pitstop.where("stop_number >= #{@pitstop.stop_number}")
+    pitstops.each do |pitstop|
+      events = Event.where(pitstop_id: pitstop.id)
+      events.each do |event|
+        event.destroy
+      end
+      pitstop.destroy
+    end
   end
 
   def expired?

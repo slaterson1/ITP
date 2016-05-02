@@ -41,13 +41,8 @@ class EventsController < ApplicationController
       @pitstop.save!
       @itinerary.update(travel_days: (@itinerary.travel_days + 1))
       @event = @pitstop.events.new(zip: zip,
-<<<<<<< HEAD
-                                  local_datetime: new_date)
-      @event.save!      
-=======
                                   local_datetime: @new_date)
       @event.save!
->>>>>>> 9a921cf8da439b64a824063fb64b56c56f376a05
       render "create.json.jbuilder", status: :created
 
     end

@@ -51,24 +51,6 @@ class EventsController < ApplicationController
     @event = Event.where("price < :price", price: params[:price])
   end
 
-  def advance_a_day(previous_date)
-    d = Date.parse(previous_date)
-    new_day = d.day + 1
-    new_date = ""
-    if !real_date?(d.year, d.month, new_day)
-      new_day = 1
-      new_month = d.month + 1
-      new_date = "#{d.year}-#{new_month}-#{new_day}"
-      if !real_date?(d.year, new_month, new_day)
-        new_year = d.year + 1
-        new_date = "#{new_year}-#{new_month}-#{new_day}"
-      end
-    else
-      new_date = "#{d.year}-#{d.month}-#{new_day}"
-    end
-    new_date
-  end
-
   def first_event
     zip = params[:zip]
     local_datetime = params[:local_datetime]

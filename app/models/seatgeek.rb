@@ -29,7 +29,6 @@ class Seatgeek
   def get_games(zip)
     options = {
       "geoip" => zip,
-      "range" => "300mi",
       "datetime_local.gte" => @start_date,
       "datetime_local.lte" => @end_date
     }

@@ -23,6 +23,8 @@ post "firstgamedata", to: "events#first_event"
 post "nextgamedata", to: "events#next_event"
 post "itinerary", to: "itinerary#show"
 post "itinerary/:id/pitstop_show/:id", to: "pitstops#show"
+delete "delete_itinerary", to: "itinerary#destroy"
+delete "reduce_itinerary", to: "itinerary#reduce"
   # Example resource route with options:
   #   resources :products do
   #     member do

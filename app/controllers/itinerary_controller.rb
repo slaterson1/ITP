@@ -22,7 +22,7 @@ class ItineraryController < ApplicationController
 	end
 
 	def destroy
-    @itinerary = current_user.itineraries.last
+    @itinerary = current_user.itineraries.find["id"]
     pitstops = Pitstop.where(itinerary_id: @itinerary.id)
     pitstops.each do |pitstop|
       events = Event.where(pitstop_id: pitstop.id)
@@ -36,16 +36,21 @@ class ItineraryController < ApplicationController
   end
 
   def reduce
-    @event = Event.find[:id]
-    @pitstop = Pitstop.find_by(id: @event.pitstop_id)
-    pitstops = Pitstop.where("stop_number >= #{@pitstop.stop_number}")
-    pitstops.each do |pitstop|
-      events = Event.where(pitstop_id: pitstop.id)
-      events.each do |event|
-        event.destroy
-      end
-      pitstop.destroy
-    end
+		@itinerary = current_user.itineraries.find["id"]
+		if @itinerary.travel_days >= 1
+			render json: { errors: "Must have at least 1 pitstop in itinerary.
+												To delete the first pitstop, select the option to delete
+												the itinerary" },
+                  status: :unauthorized
+		else
+	    @pitstop = @itinerary.pitstops.last
+	    events = Event.where(pitstop_id: pitstop.id)
+	    events.each do |event|
+	      event.destroy
+	    end
+			@pitstop.destroy
+			@itinerary.update(travel_days: (@itinerary.travel_days - 1))
+		end
     render "show.json.jbuilder", status: :ok
   end
 end

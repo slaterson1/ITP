@@ -61,13 +61,16 @@ class EventsController < ApplicationController
   end
 
   def next_event
+    @itinerary = current_user.itineraries.last
+    previous_date = @itinerary.pitstops.last.date_visited
+    previous_date = previous_date.to_date
+    previous_date = previous_date.to_s
     zip = params[:zip]
-    local_datetime = params[:local_datetime]
-    if !real_date?(local_datetime)
+    if !real_date?(previous_date)
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
-      s = Seatgeek.new(local_datetime)
+      s = Seatgeek.new(previous_date)
       seatgeek = s.get_games
       render json: seatgeek,
       status: :ok

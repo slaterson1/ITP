@@ -34,7 +34,7 @@ class EventsController < ApplicationController
       previous_date = @itinerary.pitstops.last.date_visited
       previous_date = previous_date.to_date
       previous_date = previous_date.to_s
-      new_date = advance_a_day(previous_date)
+      @new_date = advance_a_day(previous_date)
       @pitstop = @itinerary.pitstops.new(zip: zip,
                                         stop_number: (@itinerary.pitstops.last.stop_number + 1),
                                         date_visited: new_date)
@@ -42,8 +42,9 @@ class EventsController < ApplicationController
       @itinerary.update(travel_days: (@itinerary.travel_days + 1))
       @event = @pitstop.events.new(zip: zip,
                                   local_datetime: new_date)
-      @event.save!
+      @event.save!      
       render "create.json.jbuilder", status: :created
+
     end
   end
 

@@ -36,6 +36,6 @@ class Seatgeek
     }
     params = @defaults.merge(options)
 
-    Seatgeek.get("/events", query: params, headers: @headers)
+    query = Seatgeek.get("/events", query: params, headers: @headers)
   end
 end

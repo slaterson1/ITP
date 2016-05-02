@@ -4,8 +4,7 @@ class EventsController < ApplicationController
   def create_first_event
     zip = params[:zip]
     local_datetime = params[:local_datetime]
-    d = Date.parse(local_datetime)
-    if !real_date?(d.year, d.month, d.day)
+    if !real_date?(local_datetime)
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
@@ -50,8 +49,7 @@ class EventsController < ApplicationController
   def first_event
     zip = params[:zip]
     local_datetime = params[:local_datetime]
-    d = Date.parse(local_datetime)
-    if !real_date?(d.year, d.month, d.day)
+    if !real_date?(local_datetime)
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
@@ -65,13 +63,12 @@ class EventsController < ApplicationController
   def next_event
     zip = params[:zip]
     local_datetime = params[:local_datetime]
-    d = Date.parse(local_datetime)
-    if !real_date?(d.year, d.month, d.day)
+    if !real_date?(local_datetime)
       render json: { errors: "Date must be relevant and in YYYY-MM-DD format" },
                   status: :unauthorized
     else
       s = Seatgeek.new(local_datetime)
-      seatgeek = s.get_games(zip)
+      seatgeek = s.get_games
       render json: seatgeek,
       status: :ok
     end

@@ -17,7 +17,11 @@ class ApplicationController < ActionController::Base
   	end
   end
 
-  def real_date?(year, month, day)
+  def real_date?(local_datetime)
+    date_part = Date.parse(local_datetime)
+    year = date_part.year
+    month = date_part.month
+    day = date_part.day
     r1 = false
     r2 = false
     r3 = false
@@ -55,7 +59,7 @@ class ApplicationController < ActionController::Base
     end
     new_date
   end
-  
+
   rescue_from ActiveRecord::RecordNotFound do |error|
        render json: { error: "No such object: #{error.message} " },
       status: :not_found

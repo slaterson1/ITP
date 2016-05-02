@@ -47,10 +47,6 @@ class EventsController < ApplicationController
     # end
   end
 
-  def price_filter
-    @event = Event.where("price < :price", price: params[:price])
-  end
-
   def first_event
     zip = params[:zip]
     local_datetime = params[:local_datetime]
@@ -91,13 +87,5 @@ class EventsController < ApplicationController
 			expired = true
 		end
 		expired
-	end
-
-	def closed?
-		result = false
-		if expired?
-			result = true
-		end
-		result
 	end
 end

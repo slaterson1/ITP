@@ -37,12 +37,17 @@ class EventsController < ApplicationController
       @new_date = advance_a_day(previous_date)
       @pitstop = @itinerary.pitstops.new(zip: zip,
                                         stop_number: (@itinerary.pitstops.last.stop_number + 1),
-                                        date_visited: new_date)
+                                        date_visited: @new_date)
       @pitstop.save!
       @itinerary.update(travel_days: (@itinerary.travel_days + 1))
       @event = @pitstop.events.new(zip: zip,
+<<<<<<< HEAD
                                   local_datetime: new_date)
       @event.save!      
+=======
+                                  local_datetime: @new_date)
+      @event.save!
+>>>>>>> 9a921cf8da439b64a824063fb64b56c56f376a05
       render "create.json.jbuilder", status: :created
 
     end
@@ -50,24 +55,6 @@ class EventsController < ApplicationController
 
   def price_filter
     @event = Event.where("price < :price", price: params[:price])
-  end
-
-  def advance_a_day(previous_date)
-    d = Date.parse(previous_date)
-    new_day = d.day + 1
-    new_date = ""
-    if !real_date?(d.year, d.month, new_day)
-      new_day = 1
-      new_month = d.month + 1
-      new_date = "#{d.year}-#{new_month}-#{new_day}"
-      if !real_date?(d.year, new_month, new_day)
-        new_year = d.year + 1
-        new_date = "#{new_year}-#{new_month}-#{new_day}"
-      end
-    else
-      new_date = "#{d.year}-#{d.month}-#{new_day}"
-    end
-    new_date
   end
 
   def first_event
@@ -97,6 +84,32 @@ class EventsController < ApplicationController
       seatgeek = s.get_games(zip)
       render json: seatgeek,
       status: :ok
+    end
+  end
+
+  def destroy_first_event
+    @itinerary = current_user.itineraries.last
+    pitstops = Pitstop.where(itinerary_id: @itinerary.id)
+    pitstops.each do |pitstop|
+      events = Event.where(pitstop_id: pitstop.id)
+      events.each do |event|
+        event.destroy
+      end
+      pitstop.destroy
+    end
+    @itinerary.destroy
+  end
+
+  def destroy_next_event
+    @event = Event.find[:id]
+    @pitstop = Pitstop.find_by(id: @event.pitstop_id)
+    pitstops = Pitstop.where("stop_number >= #{@pitstop.stop_number}")
+    pitstops.each do |pitstop|
+      events = Event.where(pitstop_id: pitstop.id)
+      events.each do |event|
+        event.destroy
+      end
+      pitstop.destroy
     end
   end
 

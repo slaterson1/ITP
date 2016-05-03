@@ -38,4 +38,22 @@ class Seatgeek
 
     query = Seatgeek.get("/events", query: params, headers: @headers)
   end
+
+  def get_events
+    result = 0
+    get_games.each do |events|
+      result = events
+    end
+    result
+  end
+
+  def get_game_number(game_number)
+    result = 0
+    get_events[1].each do |event|
+      if event["id"] == game_number.to_s
+        result = event
+      end
+    end
+    result
+  end
 end

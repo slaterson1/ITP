@@ -2,6 +2,7 @@ class ItineraryController < ApplicationController
 	before_action :authenticate!
 
 	def create
+	 	
 	 	@itinerary = current_user.itineraries.create(start_date: params["local_datetime"])
   
         s = Seatgeek.new(local_datetime)

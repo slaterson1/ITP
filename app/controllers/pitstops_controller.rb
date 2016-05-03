@@ -5,7 +5,7 @@ class PitstopsController < ApplicationController
     itinerary = Itinerary.find[:id]
     @pitstop = itinerary.pitstops.new(city: params['city'],
                                       date_visited: params["date_visited"])
-    s = Seatgeek.new(date_visited)
+    s = Seatgeek.new(@pitstop.date_visited)
     seatgeek = s.get_games
     render json: seatgeek,
     status: :ok

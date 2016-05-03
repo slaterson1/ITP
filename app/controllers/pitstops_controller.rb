@@ -3,13 +3,17 @@ class PitstopsController < ApplicationController
 
   def create
     itinerary = Itinerary.find[:id]
-    @pitstop = itinerary.pitstops.new(city: params['city'])
-    render "create.json.jbuilder", status: :created
+    @pitstop = itinerary.pitstops.new(city: params['city'],
+                                      date_visited: params["date_visited"])
+    s = Seatgeek.new(date_visited)
+    seatgeek = s.get_games
+    render json: seatgeek,
+    status: :ok
   end
 
   def show
     itinerary = Itinerary.find[:id]
-    @pitstop = itinerary.pitstops.find_by[stop_number: params['stop_number']]
+    @pitstop = itinerary.pitstops.find[:id]
     @event = @pitstop.events.all
     render "show.json.jbuilder", status: :ok
   end

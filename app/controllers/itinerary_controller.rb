@@ -6,6 +6,7 @@ class ItineraryController < ApplicationController
     s = Seatgeek.new(@itinerary.start_date)
     seatgeek = s.get_first_game
     render json: seatgeek, status: :ok
+	binding.pry
 	end
 
 	def update

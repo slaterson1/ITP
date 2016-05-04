@@ -12,12 +12,13 @@ class Seatgeek
           "per_page" => 15,
           "taxonomies.id" => 1010100
         }
-    @start_date = start_date
+    @start_date = start_date.strftime("%Y-%m-%d")
     end_date = start_date.to_date + 1.day
     @end_date = end_date.strftime("%Y-%m-%d")
     @start_date2 = @end_date
     end_date2 = start_date.to_date + 2.day
     @end_date2 = end_date2.strftime("%Y-%m-%d")
+  binding.pry
   end
 
   def get_first_game

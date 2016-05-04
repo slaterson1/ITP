@@ -18,7 +18,6 @@ class Seatgeek
     @start_date2 = @end_date
     end_date2 = start_date.to_date + 2.day
     @end_date2 = end_date2.strftime("%Y-%m-%d")
-  binding.pry
   end
 
   def get_first_game

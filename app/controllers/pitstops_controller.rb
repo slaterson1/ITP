@@ -2,7 +2,7 @@ class PitstopsController < ApplicationController
   before_action :authenticate!
 
   def create
-    itinerary = Itinerary.last
+    itinerary = current_user.itinerary.last
     @pitstop = itinerary.pitstops.new(date_visited: params["local_datetime"])
     s = Seatgeek.new(@pitstop.date_visited)
     seatgeek = s.get_games

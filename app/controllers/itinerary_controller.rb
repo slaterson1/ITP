@@ -3,7 +3,7 @@ class ItineraryController < ApplicationController
 
 	def create
 	 	@itinerary = current_user.itineraries.create(start_date: params["local_datetime"])
-    s = Seatgeek.new(local_datetime)
+    s = Seatgeek.new(@itinerary.start_date)
     seatgeek = s.get_first_game
     render json: seatgeek, status: :ok
 	end

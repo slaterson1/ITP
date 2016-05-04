@@ -3,7 +3,7 @@ class PitstopsController < ApplicationController
 
   def create
     itinerary = Itinerary.last
-    @pitstop = itinerary.pitstops.new(local_datetime: params["date_visited"])
+    @pitstop = itinerary.pitstops.new(start_date: params["date_visited"])
     s = Seatgeek.new(@pitstop.date_visited)
     seatgeek = s.get_games
     render json: seatgeek, status: :ok

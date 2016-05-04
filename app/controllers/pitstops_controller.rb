@@ -7,6 +7,7 @@ class PitstopsController < ApplicationController
     s = Seatgeek.new(@pitstop.date_visited)
     seatgeek = s.get_games
     render json: seatgeek, status: :ok
+    binding.pry
   end
 
   def show

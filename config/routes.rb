@@ -17,7 +17,7 @@ post "signup", to: "users#create"
 post "login", to: "users#login"
 delete "logout", to: "users#destroy"
 
-post "nextgame", to: "events#create_next_event"
+post "nextgame", to: "events#create"
 post "firstgamedata", to: "itinerary#create"
 post "nextgamedata", to: "pitstops#create"
 post "itinerary", to: "itinerary#show"

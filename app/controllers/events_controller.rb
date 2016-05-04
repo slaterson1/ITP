@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   def create
     @itinerary = current_user.itineraries.last
     @pitstop = @itinerary.pitstops.last
-    @event = @pitstop.events.new(game_number: params["game_number"])
+    @event = @pitstop.events.new(local_datetime: params["local_datetime"], game_number: params["game_number"])
     @event.save!
     render "create.json.jbuilder", status: :created
   end

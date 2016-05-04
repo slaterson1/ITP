@@ -12,7 +12,7 @@ class Seatgeek
           "per_page" => 15,
           "taxonomies.id" => 1010100
         }
-    @start_date = start_date.strftime("%Y-%m-%d")
+    @start_date = start_date
     end_date = start_date.to_date + 1.day
     @end_date = end_date.strftime("%Y-%m-%d")
     @start_date2 = @end_date

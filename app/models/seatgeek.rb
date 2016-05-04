@@ -48,7 +48,7 @@ class Seatgeek
   end
 
   def get_game_number(game_number)
-    result = []
+    result = get_events[1][0]
     get_events[1].each do |event|
       if event["id"] == game_number
         result = event

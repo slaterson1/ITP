@@ -2,13 +2,12 @@ class PitstopsController < ApplicationController
   before_action :authenticate!
 
   def create
-    itinerary = Itinerary.find[:id]
+    itinerary = Itinerary.last
     @pitstop = itinerary.pitstops.new(city: params['city'],
                                       date_visited: params["date_visited"])
     s = Seatgeek.new(@pitstop.date_visited)
     seatgeek = s.get_games
-    render json: seatgeek,
-    status: :ok
+    render json: seatgeek, status: :ok
   end
 
   def show
@@ -27,7 +26,10 @@ class PitstopsController < ApplicationController
 
   def destroy
     itinerary = Itinerary.find["id"]
-    @pitstop = itinerary.pitstops.find_by(start_date: params["start_date"])
+    @pitstop = itinerary.pitstops.find["id"]
+    @pitstop.events.each do |event|
+      event.destroy
+    end
     @pitstop.destroy
     render plain: "PITSTOP DESTROYED",
     status: :accepted

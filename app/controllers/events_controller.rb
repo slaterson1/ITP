@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     @itinerary = current_user.itineraries.find(params[:itinerary_id])
  
     @pitstop = @itinerary.pitstops.find_or_create_by(date_visited: params["local_datetime"])
-    @event = @pitstop.events.create(event_params)
+    @event = @pitstop.events.create(game_number: params["game_number"])
     # @event.update_from_seatgeek
     
 	render :json => { :itinerary => @itinerary.id, 
@@ -23,10 +23,10 @@ class EventsController < ApplicationController
     render json: @seatgeek, status: :ok
   end
 
-  private
+  # private
   
-  def event_params
-  	params.permit(:game_number)
-  end
+  # def event_params
+  # 	params.permit(:game_number)
+  # end
 
 end

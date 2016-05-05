@@ -1,9 +1,11 @@
 class Event < ActiveRecord::Base
   belongs_to :pitstop
 
-  validates :local_datetime, presence: true,
-	format: {
-    with: /\d{4}-\d{2}-\d{2}/,
-    message: "USE VALID DATE FORMAT 'YYYY-MM-DD'."
-  }
+  validates :game_number, presence: true
+
+  # def update_from_seatgeek
+  # 	api = SeatGeek.new
+  # 	data = api.get_game_number(self.game_number)
+  # 	self.update(foo: data["foo"])
+  # end
 end

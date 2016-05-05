@@ -2,15 +2,31 @@ class EventsController < ApplicationController
   before_action :authenticate!
 
   def create
-    @itinerary = current_user.itineraries.find_or_create_by(user_id: current_user.id)
-    Rails.logger.info "@interary is #{@itinerary}"
-    @pitstop = @itinerary.pitstops.find_or_create_by(itinerary_id: @itinerary.id)
-    Rails.logger.info "@pitstop is #{@pitstop}"
-    @event = @pitstop.events.create(local_datetime: params["local_datetime"], game_number: params["game_number"])
-    Rails.logger.info "@event is #{@event}"
+    @itinerary = current_user.itineraries.find(params[:itinerary_id])
+ 
+    @pitstop = @itinerary.pitstops.find_or_create_by(date_visited: params["local_datetime"])
+    @event = @pitstop.events.create(event_params)
+    # @event.update_from_seatgeek
     
-    s = Seatgeek.new(@pitstop.date_visited)
-    seatgeek = s.get_games
-    render json: seatgeek, status: :ok
+	render :json => { :itinerary => @itinerary.id, 
+      			      :pitstop => @pitstop.date_visited,
+      			      :event => @event }
   end
+
+  def next_event
+  	@itinerary = current_user.itineraries.find(params[:itinerary_id])
+  	@pitstop = @itinerary.pitstops.last
+  	
+  	s = Seatgeek.new(@pitstop.date_visited)
+    @seatgeek = s.get_games
+
+    render json: @seatgeek, status: :ok
+  end
+
+  private
+  
+  def event_params
+  	params.permit(:game_number)
+  end
+
 end

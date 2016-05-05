@@ -21,7 +21,7 @@ class EventsController < ApplicationController
     game_number = @pitstop.events.last.game_number
 
     render :json => { :local_datetime => s.get_get_local_datetime(game_number).to_date,
-                      :seatgeek => @seatgeek
+                      :seatgeek => @seatgeek }
   end
 
   # private

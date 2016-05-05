@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   def create
     @itinerary = current_user.itineraries.find(params[:itinerary_id])
-    @pitstop = @itinerary.pitstops.find_or_create_by(date_visited: date_visited)
+    @pitstop = @itinerary.pitstops.find_or_create_by(date_visited: params["local_datetime"])
     @event = @pitstop.events.create(game_number: params["game_number"])
     # @event.update_from_seatgeek
 

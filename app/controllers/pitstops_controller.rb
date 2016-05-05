@@ -2,29 +2,29 @@ class PitstopsController < ApplicationController
   before_action :authenticate!
 
   def create
-    itinerary = Itinerary.last
-    @pitstop = itinerary.pitstops.new(city: params['city'],
-                                      date_visited: params["date_visited"])
-    s = Seatgeek.new(@pitstop.date_visited)
-    seatgeek = s.get_games
-    render json: seatgeek, status: :ok
+    @itinerary = current_user.itineraries.find params["id"]
+    @pitstop = @itinerary.pitstops.create(date_visited: params["local_datetime"], city: params["city"])
+    render "create.json.jbuilder"
   end
 
   def show
-    itinerary = Itinerary.find[:id]
-    @pitstop = itinerary.pitstops.find[:id]
+    @itinerary = Itinerary.find params[:id]
+    @pitstop = itinerary.pitstops.find params[:pitstop_id]
     @event = @pitstop.events.all
     render "show.json.jbuilder", status: :ok
   end
 
-  def update
-    itinerary = Itinerary.find["id"]
-    @itinerary = itinerary.pitstops["id"]
-    @itinerary.update(city: params['city'])
-    render "create.json.jbuilder", status: :ok
-  end
+  # def update
+  #   itinerary = Itinerary.find params["id"]
+  #   @itinerary = itinerary.pitstops params["id"]
+  #   @itinerary.update(city: params['city'])
+  #   render "create.json.jbuilder", status: :ok
+  # end
 
   def destroy
+    ## look up the itinerary
+    ## looking up the pitstop
+    ## calling destroy on it
     itinerary = Itinerary.find["id"]
     @pitstop = itinerary.pitstops.find["id"]
     @pitstop.events.each do |event|

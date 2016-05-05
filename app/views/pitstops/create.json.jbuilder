@@ -1,1 +1,1 @@
-json.pitstop @pitstop, :zip, :stop_number
+json.pitstop @pitstop, :date_visited

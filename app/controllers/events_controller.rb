@@ -6,6 +6,8 @@ class EventsController < ApplicationController
     @pitstop = @itinerary.pitstops.create(date_visited: date_visited)
     @event = @pitstop.events.create(game_number: params["game_number"])
 
+    @pitstop.update(pitstop_params(@event.game_number))
+    @event.update(event_params(@event.game_number))
     # @event.update_from_seatgeek
 
 	render :json => { :itinerary => @itinerary.id,
@@ -27,9 +29,15 @@ class EventsController < ApplicationController
   end
 
   private
+  def pitstop_params(game_number)
+    @pitstop = @itinerary.pitstops.last
+  	s = Seatgeek.new(@pitstop.date_visited.to_date - 1.day)
+    params.permit(city: "#{s.get_city(game_number)}, #{s.get_state(game_number)} #{s.get_zip(game_number)}")
+  end
+
   def event_params(game_number)
     @pitstop = @itinerary.pitstops.last
-  	s = Seatgeek.new(@pitstop.date_visited)
+  	s = Seatgeek.new(@pitstop.date_visited.to_date - 1.day)
   	params.permit(team: s.get_team(game_number),
                   gps_location: s.get_gps_location(game_number),
                   city: s.get_city(game_number),
@@ -43,9 +51,6 @@ class EventsController < ApplicationController
                   ticket_url: s.get_ticket_url(game_number),
                   local_datetime: s.get_local_datetime(game_number)
                   )
-  end
-
-  def event_update_from_seatgeek
   end
 
 end

@@ -80,4 +80,54 @@ class Seatgeek
     result
   end
 
+  def get_team(game_number)
+    get_game_number(game_number)["title"]
+  end
+
+  def get_gps_location(game_number)
+    lat = get_game_number(game_number)["venue"]["location"]["lat"]
+    lon = get_game_number(game_number)["venue"]["location"]["lon"]
+    result = "lat:#{lat}, lon:#{lon}"
+    result
+  end
+
+  def get_city(game_number)
+    get_game_number(game_number)["venue"]["city"]
+  end
+
+  def get_state(game_number)
+    get_game_number(game_number)["venue"]["state"]
+  end
+
+  def get_zip(game_number)
+    get_game_number(game_number)["venue"]["postal_code"]
+  end
+
+  def get_street_address(game_number)
+    get_game_number(game_number)["venue"]["address"]
+  end
+
+  def get_low_price(game_number)
+    get_game_number(game_number)["stats"]["lowest_price"]
+  end
+
+  def get_high_price(game_number)
+    get_game_number(game_number)["stats"]["highest_price"]
+  end
+
+  def get_average_price(game_number)
+    get_game_number(game_number)["stats"]["average_price"]
+  end
+
+  def get_venue_photo(game_number)
+    get_game_number(game_number)["performers"][0]["image"]
+  end
+
+  def get_ticket_url(game_number)
+    get_game_number(game_number)["performers"][1]["url"]
+  end
+
+  def get_local_datetime(game_number)
+    get_game_number(game_number)["datetime_local"]
+  end
 end

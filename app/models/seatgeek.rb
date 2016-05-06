@@ -57,6 +57,29 @@ class Seatgeek
     result
   end
 
+  def event_array(game_number)
+    result = []
+    my_event = get_events[1][0]
+    get_events[1].each do |event|
+      if event["id"] == game_number
+        my_event = event
+      end
+    end
+    result.push(my_event["title"])
+    result.push("lat: #{my_event["venue"]["location"]["lat"]}, lon: #{my_event["venue"]["location"]["lon"]}")
+    result.push(my_event["venue"]["city"])
+    result.push(my_event["venue"]["state"])
+    result.push(my_event["venue"]["postal_code"])
+    result.push(my_event["venue"]["address"])
+    result.push(my_event["stats"]["lowest_price"])
+    result.push(my_event["stats"]["highest_price"])
+    result.push(my_event["stats"]["average_price"])
+    result.push(my_event["performers"][0]["image"])
+    result.push(my_event["performers"][1]["url"])
+    result.push(my_event["datetime_local"])
+    result
+  end
+
   def get_team(game_number)
     get_game_number(game_number)["title"]
   end

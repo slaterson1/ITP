@@ -1,4 +1,4 @@
-json.itinerary @itinerary, :id, :start_date, :travel_days, :user_id, :zip
+json.itinerary @itinerary, :id, :start_date
 json.pitstops @itinerary.pitstops do |pitstop|
-		json.(pitstop, :id, :itinerary_id, :date_visited, :stop_number, :zip)
+		json.(pitstop, :id, :date_visited)
 end

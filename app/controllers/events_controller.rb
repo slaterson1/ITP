@@ -7,12 +7,15 @@ class EventsController < ApplicationController
   	s = Seatgeek.new(@pitstop.date_visited.to_date - 1.day)
     @event = @pitstop.events.create(game_number: params["game_number"])
 
-    @pitstop.update(city: "#{s.get_city(@event.game_number)}, #{s.get_state(@event.game_number)} #{s.get_zip(@event.game_number)}")
+    game_city = s.get_city(@event.game_number)
+    game_state = s.get_state(@event.game_number)
+    game_zip = s.get_zip(@event.game_number)
+    @pitstop.update(city: "#{game_city}, #{game_state} #{game_zip}")
     @event.update(team: s.get_team(@event.game_number),
                   gps_location: s.get_gps_location(@event.game_number),
-                  city: s.get_city(@event.game_number),
-                  state: s.get_state(@event.game_number),
-                  zip: s.get_zip(@event.game_number),
+                  city: game_city,
+                  state: game_state,
+                  zip: game_zip,
                   street_address: s.get_street_address(@event.game_number),
                   low_price: s.get_low_price(@event.game_number),
                   high_price: s.get_high_price(@event.game_number),

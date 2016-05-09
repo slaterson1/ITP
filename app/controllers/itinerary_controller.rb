@@ -21,11 +21,12 @@ class ItineraryController < ApplicationController
 	def show
 		@itinerary = current_user.itineraries.find_by(id: params["itinerary_id"])
 		@pitstops = @itinerary.pitstops.last
-		@game_data = @itinerary.pitstops.includes(:events).pluck(:game_number)
-		@all_games = @game_data.join(",")
+		@pitstop_dates = @itinerary.pitstops.pluck(:date_visited).join(",").split(/,/)
+		@game_data = @itinerary.pitstops.includes(:events).pluck(:game_number).join(",")
 		s = Seatgeek.new
-		@seatgeek = s.all_games(@all_games)
-		render json: @seatgeek, status: :ok
+		@seatgeek = s.all_games(@game_data)
+		render :json => { :pitstop_dates => @pitstop_dates,
+			              :seatgeek => @seatgeek }
 	end	
 
 	def index

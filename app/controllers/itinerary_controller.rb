@@ -24,7 +24,6 @@ class ItineraryController < ApplicationController
 		@pitstop_dates = @itinerary.pitstops.pluck(:date_visited).join(",").split(/,/), 
 						((@itinerary.pitstops.pluck(:date_visited).last.to_date) + 1.day).strftime
 		@game_data = @itinerary.pitstops.includes(:events).pluck(:game_number).join(",")
-		binding.pry
 		s = Seatgeek.new
 		@seatgeek = s.all_games(@game_data)
 		render :json => { :pitstop_dates => @pitstop_dates,

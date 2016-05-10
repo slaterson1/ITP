@@ -48,17 +48,17 @@ class Seatgeek
     query = Seatgeek.get("/events", query: params, headers: @headers)
   end   
   
-  def get_events
+  def get_events(start_date)
     result = 0
-    get_games.each do |events|
+    get_games(start_date).each do |events|
       result = events
     end
     result
   end
 
-  def get_game_number(game_number)
-    result = get_events[1][0]
-    get_events[1].each do |event|
+  def get_game_number(game_number, start_date)
+    result = get_events(start_date)[1][0]
+    get_events(start_date)[1].each do |event|
       if event["id"] == game_number
         result = event
       end
@@ -66,10 +66,10 @@ class Seatgeek
     result
   end
 
-  def event_array(game_number)
+  def event_array(game_number, start_date)
     result = []
-    my_event = get_events[1][0]
-    get_events[1].each do |event|
+    my_event = get_events(start_date)[1][0]
+    get_events(start_date)[1].each do |event|
       if event["id"] == game_number
         my_event = event
       end

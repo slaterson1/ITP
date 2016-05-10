@@ -5,22 +5,21 @@ class EventsController < ApplicationController
     @itinerary = current_user.itineraries.find(params[:itinerary_id])
     @pitstop = @itinerary.pitstops.create(date_visited: params["local_datetime"])
     @event = @pitstop.events.create(game_number: params["game_number"])
-    # game_city = s.get_city(@event.game_number)
-    # game_state = s.get_state(@event.game_number)
-    # game_zip = s.get_zip(@event.game_number)
-    # @pitstop.update(city: "#{game_city}, #{game_state} #{game_zip}")
-    # @event.update(team: s.get_team(@event.game_number),
-    #               gps_location: s.get_gps_location(@event.game_number),
-    #               city: game_city,
-    #               state: game_state,
-    #               zip: game_zip,
-    #               street_address: s.get_street_address(@event.game_number),
-    #               low_price: s.get_low_price(@event.game_number),
-    #               high_price: s.get_high_price(@event.game_number),
-    #               average_price: s.get_average_price(@event.game_number),
-    #               venue_photo: s.get_venue_photo(@event.game_number),
-    #               ticket_url: s.get_ticket_url(@event.game_number),
-    #               local_datetime: s.get_local_datetime(@event.game_number))
+    s = Seatgeek.new
+    updates = s.event_array(@event.game_number, @pitstop.date_visited)
+    @pitstop.update(city: "#{updates[2]}, #{updates[3]} #{updates[4]}")
+    @event.update(team: updates[0],
+                  gps_location: updates[1],
+                  city: updates[2],
+                  state: updates[3],
+                  zip: updates[4],
+                  street_address: updates[5],
+                  low_price: updates[6],
+                  high_price: updates[7],
+                  average_price: updates[8],
+                  venue_photo: updates[9],
+                  ticket_url: updates[10],
+                  local_datetime: updates[11])
 
   	render :json => { :itinerary => @itinerary.id,
         			      :pitstop => @pitstop.date_visited,

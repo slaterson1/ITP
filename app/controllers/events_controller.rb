@@ -3,10 +3,10 @@ class EventsController < ApplicationController
 
   def create
     @itinerary = current_user.itineraries.find(params[:itinerary_id])
-    @pitstop = @itinerary.pitstops.create(date_visited: params["date_visited"])
+    @pitstop = @itinerary.pitstops.create(date_visited: params["local_datetime"])
     @event = @pitstop.events.create(game_number: params["game_number"])
-
-    updates = seatgeek_event_array
+    s = Seatgeek.new
+    updates = s.event_array(@event.game_number, @pitstop.date_visited)
     @pitstop.update(city: "#{updates[2]}, #{updates[3]} #{updates[4]}")
     @event.update(team: updates[0],
                   gps_location: updates[1],
@@ -29,12 +29,10 @@ class EventsController < ApplicationController
   def next_event
   	@itinerary = current_user.itineraries.find(params[:itinerary_id])
   	@pitstop = @itinerary.pitstops.last
-
-  	s = Seatgeek.new(@pitstop.date_visited)
-    @seatgeek = s.get_games
-    game_number = @pitstop.events.last.game_number
-
-    render :json => { :local_datetime => s.get_local_datetime(game_number).to_date,
+  	s = Seatgeek.new
+    @seatgeek = s.get_games((@pitstop.date_visited + 1.day).strftime("%Y-%m-%d"))
+    @local_datetime = ((@itinerary.pitstops.last.date_visited + 1.day).strftime("%Y-%m-%d"))
+    render :json => { :local_datetime => @local_datetime,
                       :seatgeek => @seatgeek }
 
   end

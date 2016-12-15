@@ -10,7 +10,7 @@ class Seatgeek
       }
         @defaults = {
           "per_page" => 15,
-          "taxonomies.id" => 1010100
+          "taxonomies.id" => 1040100
         }
   end
 
@@ -46,8 +46,8 @@ class Seatgeek
     params = @defaults.merge(options)
 
     query = Seatgeek.get("/events", query: params, headers: @headers)
-  end   
-  
+  end
+
   def get_events(start_date)
     result = 0
     get_games(start_date).each do |events|

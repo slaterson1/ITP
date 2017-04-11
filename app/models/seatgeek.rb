@@ -10,7 +10,7 @@ class Seatgeek
       }
         @defaults = {
           "per_page" => 15,
-          "taxonomies.id" => 1040100
+          "taxonomies.id" => 1010100
         }
   end
 

@@ -17,7 +17,7 @@ class Seatgeek
   def get_first_game(start_date)
     @start_date = start_date
     @end_date = (start_date.to_date + 1.day).strftime("%Y-%m-%d")
-
+    
     options = {
       "datetime_local.gte" => @start_date,
       "datetime_local.lte" => @end_date

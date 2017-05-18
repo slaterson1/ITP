@@ -1,5 +1,5 @@
 class PitstopsController < ApplicationController
-  protect_from_forgery with: :null_session
+  before_action :authenticate!
 
   def create
     @itinerary = current_user.itineraries.find params["id"]

@@ -1,5 +1,5 @@
 class ItineraryController < ApplicationController
-	protect_from_forgery with: :null_session
+	before_action :authenticate!
 
 	def create
 	 	@itinerary = current_user.itineraries.create(start_date: params["local_datetime"])
